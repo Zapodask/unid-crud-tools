@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 
 import { Tool } from '../db/models/tool.entity';
 import { CreateDto } from './dto/create.dto';
-import { ResponsePaginate } from './dto/response.paginated.dto';
+import { ResponsePaginate } from './dto/responsePaginated.dto';
 
 @Injectable()
 export class ToolsService {
