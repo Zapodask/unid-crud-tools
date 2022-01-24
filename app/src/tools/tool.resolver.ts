@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ToolsService } from './tools.service';
 import { Tool } from '../db/models/tool.entity';
-import { CreateDto } from './dto/create.dto.ts';
+import { CreateDto } from './dto/create.dto';
 
 @Resolver()
 export class ToolResolver {
@@ -10,8 +10,14 @@ export class ToolResolver {
 
   // Buscar todas as ferramentas
   @Query(() => [Tool])
-  public async getTools(): Promise<Tool[]> {
-    return this.toolService.findAll();
+  public async getTools(
+    @Args('tag', { defaultValue: '' }) tag?: string,
+    @Args('page', { nullable: true }) page?: number,
+    @Args('perPage', { nullable: true }) perPage?: number,
+  ): Promise<Tool[]> {
+    const { data } = await this.toolService.findAll(tag, page, perPage);
+
+    return data;
   }
 
   // Buscar uma ferramenta
